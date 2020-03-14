@@ -4,12 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.maddakbasement.android.dbretro.api.RestDBApi
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 
 private const val TAG = "restDBrequest RESULT"
 
@@ -19,25 +15,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val retrofit: Retrofit = Retrofit.Builder()
-                .baseUrl("https://rdb-simpledb.restdb.io/rest/")
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .build()
-        val restDBApi: RestDBApi = retrofit.create(
-            RestDBApi::class.java)
-
-        val restDBrequest: Call<String> = restDBApi.fetchContents()
-
-        restDBrequest.enqueue(object: Callback<String> {
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.e(TAG, "Failed to fetch photos", t)
+        val restDbLiveData: LiveData<String> = DataFetcher().fetchData()
+        restDbLiveData.observe(
+            this, Observer { responseString ->
+                Log.d(TAG, "Response received: $responseString")
             }
-
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                Log.d(TAG, "Response received: ${response.body()}")
-                showResult(response.body() ?: "FAILED")
-            }
-        })
+        )
     }
 
     private fun showResult(message: String) {

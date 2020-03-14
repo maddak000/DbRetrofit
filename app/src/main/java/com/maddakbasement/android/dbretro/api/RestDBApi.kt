@@ -7,7 +7,7 @@ import retrofit2.http.Headers
 interface RestDBApi {
     @Headers("x-apikey: 560bd47058e7ab1b2648f4e7")
     @GET("companies")
-    fun fetchContents(): Call<String>
+    fun fetchData(): Call<String>
 
 }
 
