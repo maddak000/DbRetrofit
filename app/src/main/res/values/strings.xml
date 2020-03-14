@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DBRetro</string>
+    <string name="execute_request">Send Request</string>
 </resources>

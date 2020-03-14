@@ -2,6 +2,7 @@ package com.maddakbasement.android.dbretro
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
@@ -11,9 +12,16 @@ private const val TAG = "restDBrequest RESULT"
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var requestButton: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        requestButton = findViewById(R.id.button)
+        requestButton.setOnClickListener {
+            //
+        }
 
         val restDbLiveData: LiveData<String> = DataFetcher().fetchData()
         restDbLiveData.observe(
