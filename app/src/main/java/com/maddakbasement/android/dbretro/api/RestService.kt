@@ -1,5 +1,6 @@
 package com.maddakbasement.android.dbretro.api
 
+import io.reactivex.Observable
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -9,10 +10,10 @@ import retrofit2.http.GET
 
 interface RestService {
     @GET("companies")
-    fun readCompanies(): List<Model.Company>
+    fun readCompanies(): Observable<List<Model.Company>>
 
     @GET("companies/5631d356f941f47900000110")
-    fun readCompany(): Model.Company
+    fun readCompany(): Observable<Model.Company>
 }
 
 object Model {
@@ -50,7 +51,7 @@ class ServiceFactory private constructor(private val retrofit: Retrofit) {
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(baseUrl)
                 .build()
-            
+
             return ServiceFactory(retrofit)
         }
     }
