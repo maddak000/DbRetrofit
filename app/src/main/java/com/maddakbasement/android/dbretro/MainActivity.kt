@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.maddakbasement.android.dbretro.api.RestDBApi
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,7 +23,8 @@ class MainActivity : AppCompatActivity() {
                 .baseUrl("https://rdb-simpledb.restdb.io/rest/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build()
-        val restDBApi: RestDBApi = retrofit.create(RestDBApi::class.java)
+        val restDBApi: RestDBApi = retrofit.create(
+            RestDBApi::class.java)
 
         val restDBrequest: Call<String> = restDBApi.fetchContents()
 

@@ -1,4 +1,4 @@
-package com.maddakbasement.android.dbretro
+package com.maddakbasement.android.dbretro.api
 
 import retrofit2.Call
 import retrofit2.http.GET
@@ -8,7 +8,7 @@ interface RestDBApi {
     @Headers("x-apikey: 560bd47058e7ab1b2648f4e7")
     @GET("companies")
     fun fetchContents(): Call<String>
-    
+
 }
 
 //        connection.setRequestProperty("User-Agent", "my-restdb-app");
