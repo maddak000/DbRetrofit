@@ -3,6 +3,7 @@ package com.maddakbasement.android.dbretro.api
 import io.reactivex.Observable
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -14,12 +15,20 @@ interface RestService {
 
     @GET("companies/5631d356f941f47900000110")
     fun readCompany(): Observable<Model.Company>
+
+    @GET("questions/5e6d4abe33a9df6c000224e3")
+    fun readQuestion():Observable<Model.Question>
 }
 
 object Model {
     data class Company(
         val _id: String,
         val name: String
+    )
+
+    data class Question(
+        val question: String,
+        val answers: List<String>
     )
 }
 
@@ -37,7 +46,7 @@ class ServiceFactory private constructor(private val retrofit: Retrofit) {
             val clientBuilder = OkHttpClient.Builder()
             val headerInterceptor = Interceptor {                   //it = chain
                 val request = it.request().newBuilder()
-                    .addHeader("x-apikey", "560bd47058e7ab1b2648f4e7")
+                    .addHeader("x-apikey", "4e2989ea010abb27bb5c692dfb5d5b40a30d8")
                     .build()
                 it.proceed(request)
             }

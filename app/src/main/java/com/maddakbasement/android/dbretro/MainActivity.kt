@@ -18,7 +18,7 @@ private const val TAG = "restDBrequest RESULT"
 class MainActivity : AppCompatActivity() {
 
     private val service by lazy {
-        val factory = ServiceFactory.getInstance("https://rdb-simpledb.restdb.io/rest/")
+        val factory = ServiceFactory.getInstance("https://marcintest-5b77.restdb.io/rest/")
         factory.build(RestService::class.java)
     }
     private var disposable: Disposable? = null
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         requestButton = findViewById(R.id.button)
         requestButton.setOnClickListener {
-            getCompany()
+            getQuestions()
         }
     }
 
@@ -50,6 +50,18 @@ class MainActivity : AppCompatActivity() {
             .subscribe({ company ->
                 run {
                     showResult(company.name)
+                }
+            },
+                { showResult("Failed to read the product") })
+    }
+
+    fun getQuestions() {
+        this.disposable = this.service.readQuestion()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ question ->
+                run {
+                    showResult(question.question)
                 }
             },
                 { showResult("Failed to read the product") })
